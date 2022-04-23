@@ -2,6 +2,7 @@ import './css/styles.css';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
+import countryCardTpl from './country-card.hbs'
 const DEBOUNCE_DELAY = 300;
 
 const refs = {
@@ -18,15 +19,16 @@ const refs = {
 // const fetchCountries = (name) => {
 
 // }
-fetch('https://restcountries.com/v3.1/all')
+fetch('https://restcountries.com/v3.1/name/peru')
 .then(response =>{
    return response.json();
 }).then((country)=>{
     console.log(country);
+    const markup = countryCardTpl(country[0]);
+    console.log(markup);
+    refs.countryInfo.innerHTML = markup;
 }).catch(error => {
     return Notiflix.Notify.failure('Oops! There is no country with that name!');
-})
+});
 
-refs.countryList.insertAdjacentHTML("beforebegin", `<svg width="6" height="10" class="button__icon--pink">
-<use href="./images/symbol-defs.svg#icon-Vector-1"></use>
-</svg><h2 class='country-title'>${name.official}</h2><p class='country-capital'>${capital}</p><p class='country-population'>${population}</p><p class='country-languages'>${lang}</p>`);
+// refs.countryList.insertAdjacentHTML("beforebegin", ``);
