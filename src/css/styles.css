@@ -21,6 +21,9 @@ body {
 h2 {
   margin: 0;
 }
+ul {
+  list-style: none;
+}
 .country-title-box {
   display: flex;
   align-items: baseline;
@@ -34,7 +37,10 @@ p {
 span {
   font-weight: 400;
 }
-.languages-list {
-  list-style: none;
-  display: flex;
+
+.languages-item:not(:last-child):after {
+content: ',';
+}
+.country-title {
+  font-weight: 400;
 }
