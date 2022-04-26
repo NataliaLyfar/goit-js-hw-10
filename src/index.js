@@ -36,12 +36,12 @@ const onFetchError = Error => {
     return refs.countryList.remove();
 }
 const clearInput = e => {
-    const currentData = e.currentTarget.value;
+    const currentData = refs.searchInput.value;
     if(currentData === ''){refs.countryInfo.remove();}
 }
 const onSearch = e => {
     e.preventDefault;
-    const inputData = e.target.value.trim();
+    const inputData = refs.searchInput.value.trim();
 
     fetchCountries(inputData)
     .then(renderCountryCard)
