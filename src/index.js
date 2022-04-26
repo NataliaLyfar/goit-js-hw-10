@@ -9,7 +9,7 @@ import getRefs from './js/get-refs.js';
 const DEBOUNCE_DELAY = 300;
 
 const refs = getRefs();
-
+let countries = [];
 const createCountryList = countries => {
     return countries.map(el => {
         return `<li><div class="country-title-box">
@@ -24,18 +24,22 @@ const renderCountryCard = (countries) => {
     if(countriesQuentity > 10){
         return Notiflix.Notify.info("Too many matches found. Please enter a more specific name.")}
     else if(countriesQuentity > 1 && countriesQuentity <= 10){
-        return refs.countryList.insertAdjacentHTML('beforeend', createCountryList(countries))} 
+        refs.countryList.insertAdjacentHTML('beforeend', createCountryList(countries));
+        refs.countryList.classList.remove('visually-hidden');
+        refs.countryInfo.classList.add('visually-hidden');
+    } 
     else if(countriesQuentity === 1){
-        refs.countryList.remove();
+        refs.countryList.classList.add('visually-hidden');
+        refs.countryInfo.classList.remove('visually-hidden');
         const markup = countryCardTpl(countries[0]);
-        return refs.countryInfo.innerHTML = markup;}
+        refs.countryInfo.innerHTML = markup;}
         }
 const onFetchError = Error => {
     Notiflix.Notify.failure('Oops! There is no country with that name!');
     refs.countryInfo.remove();
-    return refs.countryList.remove();
+    refs.countryList.remove();
 }
-const clearInput = e => {
+const clearInput = () => {
     const currentData = refs.searchInput.value;
     if(currentData === ''){refs.countryInfo.remove();}
 }
