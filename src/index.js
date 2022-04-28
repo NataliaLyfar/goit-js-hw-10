@@ -8,6 +8,7 @@ import countryListTpl from './template/country-list.hbs';
 import countryCardTpl from './template/country-card.hbs';
 
 const DEBOUNCE_DELAY = 300;
+let inputData = '';
 
 const createCountryList = countries => countries.map(country => countryListTpl(country)).join('');
 const renderCountryCard = (countries) => {
@@ -26,23 +27,20 @@ const renderCountryCard = (countries) => {
         refs.countryInfo.innerHTML = countryCardTpl(countries[0]);
     }
         };
-const onFetchError = Error => {
+const onFetchError = () => {
     Notiflix.Notify.failure('Oops! There is no country with that name!');
     refs.countryInfo.innerHTML = '';
     refs.countryList.innerHTML = '';
 };
-const clearInput = () => {
-    const currentData = refs.searchInput.value;
-    if(currentData === ''){refs.countryInfo.innerHTML = '';}
-};
+const clearInput = () => refs.countryInfo.innerHTML = '';
 const onSearch = e => {
     e.preventDefault;
-    const inputData = refs.searchInput.value.trim();
-
+   
+   if(inputData = e.target.value.trim()){
     fetchCountries(inputData)
     .then(renderCountryCard)
     .catch(onFetchError);
-
+}
     clearInput();
 };
 refs.searchInput.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
