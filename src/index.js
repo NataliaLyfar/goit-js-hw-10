@@ -8,7 +8,6 @@ import countryListTpl from './template/country-list.hbs';
 import countryCardTpl from './template/country-card.hbs';
 
 const DEBOUNCE_DELAY = 300;
-let inputData = '';
 
 const createCountryList = countries => countries.map(country => countryListTpl(country)).join('');
 const renderCountryCard = (countries) => {
@@ -36,8 +35,8 @@ const clearInput = () => refs.countryInfo.innerHTML = '';
 const onSearch = e => {
     e.preventDefault;
    
-   if(inputData = e.target.value.trim()){
-    fetchCountries(inputData)
+   if(e.target.value !== ''){
+    fetchCountries(e.target.value.trim())
     .then(renderCountryCard)
     .catch(onFetchError);
 }
