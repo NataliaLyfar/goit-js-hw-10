@@ -35,7 +35,7 @@ const clearInput = () => refs.countryInfo.innerHTML = '';
 const onSearch = e => {
     e.preventDefault;
    
-   if(e.target.value !== ''){
+   if(e.target.value){
     fetchCountries(e.target.value.trim())
     .then(renderCountryCard)
     .catch(onFetchError);
