@@ -29,6 +29,10 @@ body {
 h2 {
   margin: 0;
 }
+.country-link {
+  text-decoration: none;
+  color: inherit;
+}
 .country-list {
   padding: 0 30px;
   list-style: none;

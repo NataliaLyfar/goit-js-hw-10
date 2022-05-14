@@ -1,7 +1,11 @@
+{{#each this}}
 <li>
+    <a class="country-link" href="">
     <div class="country-title-box">
         <img class="country-flag" width="25" 
         src='{{flags.svg}}'/>
         <h2 class='country-title'>{{name.official}}</h2>
     </div>
+    </a>
 </li>
+{{/each}}
