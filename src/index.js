@@ -8,14 +8,14 @@ import countryListTpl from './template/country-list.hbs';
 import countryCardTpl from './template/country-card.hbs';
 
 const DEBOUNCE_DELAY = 300;
+
 const clearMarkup = () => {
     refs.countryInfo.innerHTML = '';
     refs.countryList.innerHTML = '';
 };
-const createCountryList = countries => countryListTpl(countries);
-const createCountryMarkup = country => countryCardTpl(country);
-// const generateCountry = country => refs.countryInfo.innerHTML = createCountryMarkup(country);
-// const onClick = (name) => fetchCountries(name).then(generateCountry)
+const createCountryMarkup = country => refs.countryInfo.innerHTML = countryCardTpl(country);
+const createCountryList = countries => refs.countryList.innerHTML = countryListTpl(countries);
+
 const renderCountryCard = countries => {
     const countriesQuantity = countries.length;
     clearMarkup();
@@ -24,19 +24,11 @@ const renderCountryCard = countries => {
     }
     else if(countriesQuantity > 1 && countriesQuantity <= 10){
         Notify.info(`Hooray! We found ${countriesQuantity} countries.`);
-        refs.countryList.innerHTML  = createCountryList(countries);
-        // console.log(refs.countryList);
-        // const countryLink = document.querySelector('.country-link');
-        // const countryName = document.querySelector('.country-title');
-        // console.log(countryLink);
-        
-        // const name = countryName.textContent;
-        // countryLink.addEventListener('click', onClick);
-        // console.log(name);
-    } 
+        createCountryList(countries);
+} 
     else if(countriesQuantity === 1){
         Notify.success(`This is exactly what you were looking for!`);
-        refs.countryInfo.innerHTML = createCountryMarkup(countries);
+         createCountryMarkup(countries);
     }
     };
 const onFetchError = () => {
@@ -52,8 +44,8 @@ const onSearch = e => {
     .catch(onFetchError);
     }
     clearMarkup();
+    
 };
-
 refs.searchInput.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 
