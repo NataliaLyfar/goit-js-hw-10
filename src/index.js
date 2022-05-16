@@ -16,6 +16,22 @@ const clearMarkup = () => {
 const createCountryMarkup = country => refs.countryInfo.innerHTML = countryCardTpl(country);
 const createCountryList = countries => refs.countryList.innerHTML = countryListTpl(countries);
 
+const createSelectedByClickCountry = () => {
+    const countriesList = refs.countryList.querySelectorAll('.country-title');
+    return countriesList.forEach(selectedCountry => {
+    const onSelectClick = (e) => {
+        e.preventDefault;
+        const name = selectedCountry.textContent;
+            fetchCountries(name)
+            .then(renderCountryCard)
+            .catch(onFetchError);
+            clearMarkup();
+            refs.searchInput.value = '';
+      };
+      selectedCountry.addEventListener('click', onSelectClick)
+    })
+}
+
 const renderCountryCard = countries => {
     const countriesQuantity = countries.length;
     clearMarkup();
@@ -25,7 +41,8 @@ const renderCountryCard = countries => {
     else if(countriesQuantity > 1 && countriesQuantity <= 10){
         Notify.info(`Hooray! We found ${countriesQuantity} countries.`);
         createCountryList(countries);
-} 
+        createSelectedByClickCountry();
+    } 
     else if(countriesQuantity === 1){
         Notify.success(`This is exactly what you were looking for!`);
          createCountryMarkup(countries);
@@ -43,8 +60,7 @@ const onSearch = e => {
     .then(renderCountryCard)
     .catch(onFetchError);
     }
-    clearMarkup();
-    
+    clearMarkup();  
 };
 refs.searchInput.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
